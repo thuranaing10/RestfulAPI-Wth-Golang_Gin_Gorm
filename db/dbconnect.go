@@ -22,7 +22,7 @@ func InitDB() {
 	}
 
 	// Auto-migrate the models
-	Database.AutoMigrate(&models.User{}, &models.Product{})
+	Database.AutoMigrate(&models.User{}, &models.Product{}, &models.Post{})
 }
 
 // GetDB returns the database instance

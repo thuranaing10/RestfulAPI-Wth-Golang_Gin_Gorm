@@ -12,14 +12,23 @@ func SetupRouter() *gin.Engine {
 	r.POST("/register", controllers.Register)
 	r.POST("/login", controllers.Login)
 
-	auth := r.Group("/products")
-	auth.Use(middlewares.AuthMiddleware())
+	// auth := r.Group("/products")
+	r.Use(middlewares.AuthMiddleware())
 	{
-		auth.POST("/", controllers.CreateProduct)
-		auth.GET("/", controllers.GetProducts)
-		auth.GET("/:id", controllers.GetProduct)
-		auth.PUT("/:id", controllers.UpdateProduct)
-		auth.DELETE("/:id", controllers.DeleteProduct)
+		product := r.Group("/products")
+		product.POST("/", controllers.CreateProduct)
+		product.GET("/", controllers.GetProducts)
+		product.GET("/:id", controllers.GetProduct)
+		product.PUT("/:id", controllers.UpdateProduct)
+		product.DELETE("/:id", controllers.DeleteProduct)
+
+		post := r.Group("/posts")
+		post.POST("/", controllers.CreatePost)
+		post.GET("/", controllers.GetPosts)
+		post.GET("/:id", controllers.GetPost)
+		post.PUT("/:id", controllers.UpdatePost)
+		post.DELETE("/:id", controllers.DeletePost)
+
 	}
 
 	return r
